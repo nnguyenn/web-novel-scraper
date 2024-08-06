@@ -50,7 +50,7 @@ def read_chapter(chapter):
         return render_template('reader.html', chapter_content=chapter_content, next_chapter=next_chapter, prev_chapter=prev_chapter, formatted_title=formatted_title)
     return redirect(url_for('index'))
 
-@app.route("/chapters/<filename>")
+@app.route("/pick-me-up/<filename>")
 def chapters(filename):
     return send_from_directory('chapters', filename)
 

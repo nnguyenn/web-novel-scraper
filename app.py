@@ -9,7 +9,7 @@ def natural_sort_key(s):
     return [int(text) if text.isdigit() else text.lower() for text in re.split('(\d+)', s)]
 
 # SORT CHAPTERS
-chapter_files = sorted(os.listdir("chapters"), key=natural_sort_key)
+chapter_files = sorted(os.listdir("pick-me-up"), key=natural_sort_key)
 
 def format_title(chapter_file):
     title = chapter_file.replace("p-m-u-", "P.M.U ")
@@ -20,7 +20,7 @@ def format_title(chapter_file):
 def index():
     return render_template('index.html', chapters=chapter_files)
 
-@app.route("/chapter/<chapter>")
+@app.route("/pick-me-up/<chapter>")
 def read_chapter(chapter):
     if chapter in chapter_files:
         current_index = chapter_files.index(chapter)
@@ -29,7 +29,7 @@ def read_chapter(chapter):
         formatted_title = format_title(chapter)
         
         # READ CONTENT!!!
-        with open(os.path.join('chapters', chapter), 'r', encoding='utf-8') as file:
+        with open(os.path.join('pick-me-up', chapter), 'r', encoding='utf-8') as file:
             chapter_content = file.read()
         
         # REMOVE UGLY TITLE!!
@@ -52,7 +52,7 @@ def read_chapter(chapter):
 
 @app.route("/pick-me-up/<filename>")
 def chapters(filename):
-    return send_from_directory('chapters', filename)
+    return send_from_directory('pick-me-up', filename)
 
 if __name__ == "__main__":
     app.run(debug=True)

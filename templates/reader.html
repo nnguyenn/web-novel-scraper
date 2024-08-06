@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ formatted_title }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            padding: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .home-button, .dark-mode-toggle {
+            font-size: 1.2em;
+            text-decoration: none;
+            color: #007BFF;
+            background-color: #fff;
+            padding: 10px 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .home-button:hover, .dark-mode-toggle:hover {
+            background-color: #e0e0e0;
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .content {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+        .navigation {
+            margin-top: 30px;
+            text-align: center;
+        }
+        .navigation a {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 5px;
+            font-size: 1.5em;
+            text-decoration: none;
+            color: #fff;
+            background-color: #007BFF;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .navigation a:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+        .dark-mode {
+            background-color: #121212;
+            color: #ddd;
+        }
+        .dark-mode a {
+            color: #80b3ff;
+        }
+        .dark-mode .navigation a {
+            background-color: #333;
+        }
+        .dark-mode .navigation a:hover {
+            background-color: #555;
+        }
+        .dark-mode .home-button, .dark-mode .dark-mode-toggle {
+            background-color: #333;
+            color: #ddd;
+        }
+        .dark-mode .home-button:hover, .dark-mode .dark-mode-toggle:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="{{ url_for('index') }}" class="home-button">Home</a>
+        <div class="dark-mode-toggle" onclick="toggleDarkMode()">Toggle Dark Mode</div>
+    </div>
+    <h1>{{ formatted_title }}</h1>
+    <div class="content">
+        {{ chapter_content | safe }}
+    </div>
+    <div class="navigation">
+        {% if prev_chapter %}
+        <a href="{{ url_for('read_chapter', chapter=prev_chapter) }}">Previous</a>
+        {% endif %}
+        {% if next_chapter %}
+        <a href="{{ url_for('read_chapter', chapter=next_chapter) }}">Next</a>
+        {% endif %}
+    </div>
+    <script>
+        function toggleDarkMode() {
+            const body = document.body;
+            body.classList.toggle('dark-mode');
+            const toggleButton = document.querySelector('.dark-mode-toggle');
+            if (body.classList.contains('dark-mode')) {
+                toggleButton.textContent = 'Toggle Light Mode';
+                localStorage.setItem('darkMode', 'enabled');
+            } else {
+                toggleButton.textContent = 'Toggle Dark Mode';
+                localStorage.setItem('darkMode', 'disabled');
+            }
+        }
+
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            document.body.classList.add('dark-mode');
+            document.querySelector('.dark-mode-toggle').textContent = 'Toggle Light Mode';
+        }
+    </script>
+</body>
+</html>

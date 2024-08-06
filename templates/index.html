@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pick Me Up, Infinite Gacha - Chapters</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            padding: 20px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        h1 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .chapter-list {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0;
+            list-style: none;
+        }
+        .chapter-list li {
+            margin: 10px 0;
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: background-color 0.3s, transform 0.3s;
+            cursor: pointer;
+        }
+        .chapter-list li:hover {
+            background-color: #f0f0f0;
+            transform: scale(1.02);
+        }
+        .chapter-list li a {
+            text-decoration: none;
+            color: #007BFF;
+            font-size: 1.2em;
+            display: block;
+        }
+        .chapter-list li a:hover {
+            text-decoration: underline;
+        }
+        .dark-mode {
+            background-color: #121212;
+            color: #ddd;
+        }
+        .dark-mode a {
+            color: #80b3ff;
+        }
+        .dark-mode .chapter-list li {
+            background-color: #333;
+        }
+        .dark-mode .chapter-list li:hover {
+            background-color: #555;
+        }
+        .dark-mode-toggle {
+            font-size: 1.2em;
+            cursor: pointer;
+            background-color: #fff;
+            padding: 10px 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: background-color 0.3s;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+        }
+        .dark-mode .dark-mode-toggle {
+            background-color: #333;
+            color: #ddd;
+        }
+        .dark-mode .dark-mode-toggle:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <h1>Pick Me Up, Infinite Gacha - Chapters</h1>
+    <ul class="chapter-list">
+        {% for chapter in chapters %}
+        <li><a href="{{ url_for('read_chapter', chapter=chapter) }}">{{ chapter.replace('p-m-u-', '').replace('-', ' ').replace('_', ' ').replace('.html', '').title() }}</a></li>
+        {% endfor %}
+    </ul>
+    <div class="dark-mode-toggle" onclick="toggleDarkMode()">Toggle Dark Mode</div>
+    <script>
+        function toggleDarkMode() {
+            const body = document.body;
+            body.classList.toggle('dark-mode');
+            const toggleButton = document.querySelector('.dark-mode-toggle');
+            if (body.classList.contains('dark-mode')) {
+                toggleButton.textContent = 'Toggle Light Mode';
+                localStorage.setItem('darkMode', 'enabled');
+            } else {
+                toggleButton.textContent = 'Toggle Dark Mode';
+                localStorage.setItem('darkMode', 'disabled');
+            }
+        }
+
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            document.body.classList.add('dark-mode');
+            document.querySelector('.dark-mode-toggle').textContent = 'Toggle Light Mode';
+        }
+    </script>
+</body>
+</html>
